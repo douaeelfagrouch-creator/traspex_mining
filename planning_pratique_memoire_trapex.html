@@ -1,0 +1,301 @@
+
+<style>
+* { box-sizing: border-box; }
+.phase { border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); margin-bottom: 12px; overflow: hidden; }
+.phase-header { padding: 12px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+.phase-header:hover { background: var(--color-background-secondary); }
+.phase-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+.phase-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
+.phase-duration { font-size: 12px; color: var(--color-text-tertiary); }
+.chevron { font-size: 12px; color: var(--color-text-tertiary); transition: transform .2s; }
+.chevron.open { transform: rotate(90deg); }
+.phase-body { padding: 0 16px 14px; display: none; }
+.phase-body.open { display: block; }
+.step { display: flex; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.step:last-child { border-bottom: none; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.step-content { flex: 1; }
+.step-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; }
+.step-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
+.step-tip { font-size: 11px; color: var(--color-text-tertiary); background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 4px 8px; margin-top: 5px; display: inline-block; }
+.tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 20px; font-weight: 500; margin-left: 6px; }
+.tag-excel { background: #EAF3DE; color: #3B6D11; }
+.tag-terrain { background: #E6F1FB; color: #185FA5; }
+.tag-redaction { background: #EEEDFE; color: #3C3489; }
+.tag-analyse { background: #FAEEDA; color: #854F0B; }
+.progress-bar { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; margin: 0 0 16px; }
+.progress-fill { height: 4px; border-radius: 2px; transition: width .3s; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+</style>
+
+<h2 class="sr-only">Planning pratique étape par étape pour le mémoire Trapex Mining</h2>
+
+<div style="margin-bottom:16px;">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;">Clique sur chaque phase pour voir ce que tu dois faire exactement.</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#639922;"></div> Terrain / collecte</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#378ADD;"></div> Excel / calculs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7F77DD;"></div> Rédaction</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EF9F27;"></div> Analyse</div>
+  </div>
+</div>
+
+<div class="phase" id="p1">
+  <div class="phase-header" onclick="toggle('p1')">
+    <div class="phase-num" style="background:#E6F1FB;color:#185FA5;">1</div>
+    <div>
+      <div class="phase-title">Collecte des données chez Trapex <span class="tag tag-terrain">Terrain</span></div>
+      <div class="phase-duration">Ce que tu dois demander au service comptable</div>
+    </div>
+    <span class="chevron" id="c1">›</span>
+  </div>
+  <div class="phase-body" id="b1">
+    <div class="step">
+      <div class="step-dot" style="background:#378ADD;"></div>
+      <div class="step-content">
+        <p class="step-title">Demande le grand livre ou la balance analytique</p>
+        <p class="step-desc">C'est le document qui liste toutes les charges par nature (énergie, salaires, amortissements, maintenance…). Demande-le pour une année complète (ex : 2023 ou 2024).</p>
+        <span class="step-tip">À qui demander : responsable comptable ou DAF de Trapex</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#378ADD;"></div>
+      <div class="step-content">
+        <p class="step-title">Récupère les factures d'énergie (séchage)</p>
+        <p class="step-desc">Factures électricité ou gaz du four de séchage — tu as besoin du montant total annuel et si possible du kWh consommé par mois. Ce chiffre va servir pour calculer le coût séchage par tonne.</p>
+        <span class="step-tip">Si impossible : demande le coût énergie total de la production</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#378ADD;"></div>
+      <div class="step-content">
+        <p class="step-title">Récupère les données de production</p>
+        <p class="step-desc">Tonnes produites de SHL 20 / année. Tonnes de dérivés / année. Heures de fonctionnement des machines. Ces chiffres permettent de calculer des coûts unitaires (par tonne).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#378ADD;"></div>
+      <div class="step-content">
+        <p class="step-title">Récupère la liste des clients avec les données de vente</p>
+        <p class="step-desc">Pour chaque client : nom, localisation (ville), volume acheté en tonnes, prix de vente pratiqué, délai de paiement. Au minimum 4 à 6 clients pour une analyse sérieuse.</p>
+        <span class="step-tip">Si confidentiel : utilise des noms fictifs (Client A, B, C…)</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#378ADD;"></div>
+      <div class="step-content">
+        <p class="step-title">Récupère les coûts de transport</p>
+        <p class="step-desc">Factures transporteur ou coût au km/tonne pratiqué par Trapex. Si possible : coût par livraison, distance, fréquence. C'est essentiel pour calculer le prix de revient rendu client.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="phase" id="p2">
+  <div class="phase-header" onclick="toggle('p2')">
+    <div class="phase-num" style="background:#EAF3DE;color:#3B6D11;">2</div>
+    <div>
+      <div class="phase-title">Construction du fichier Excel <span class="tag tag-excel">Excel</span></div>
+      <div class="phase-duration">Comment organiser ton fichier de calcul</div>
+    </div>
+    <span class="chevron" id="c2">›</span>
+  </div>
+  <div class="phase-body" id="b2">
+    <div class="step">
+      <div class="step-dot" style="background:#639922;"></div>
+      <div class="step-content">
+        <p class="step-title">Onglet 1 — Tableau des charges</p>
+        <p class="step-desc">Crée un tableau avec 3 colonnes : Poste de charge / Montant total annuel (MAD) / Nature (directe ou indirecte). Remplis avec toutes les données récupérées à l'étape 1.</p>
+        <span class="step-tip">Exemple : Énergie séchage = 450 000 MAD / Directe</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#639922;"></div>
+      <div class="step-content">
+        <p class="step-title">Onglet 2 — Calcul du coût de revient unitaire</p>
+        <p class="step-desc">Divise chaque charge par les tonnes produites → tu obtiens le coût unitaire par tonne. Fais ce calcul séparément pour SHL 20 et pour les dérivés. La formule finale = somme de tous les coûts unitaires.</p>
+        <span class="step-tip">Coût énergie/tonne = Charges énergie totales ÷ Tonnes SHL 20 produites</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#639922;"></div>
+      <div class="step-content">
+        <p class="step-title">Onglet 3 — Tableau des clients</p>
+        <p class="step-desc">Une ligne par client : Nom / Localisation / Volume (t) / Prix de vente (MAD/t) / Coût transport (MAD/t) / Délai paiement (jours). Ce tableau est la base de l'analyse de rentabilité.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#639922;"></div>
+      <div class="step-content">
+        <p class="step-title">Onglet 4 — Calcul de la rentabilité par client</p>
+        <p class="step-desc">Pour chaque client : Prix de vente − Coût de revient − Coût transport = Marge nette. Puis : Marge nette ÷ Prix de vente × 100 = Taux de marge (%). Trie ensuite du plus rentable au moins rentable.</p>
+        <span class="step-tip">Ajoute une colonne "Segment" (A/B/C/D) selon le résultat</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#639922;"></div>
+      <div class="step-content">
+        <p class="step-title">Onglet 5 — Dashboard (graphiques)</p>
+        <p class="step-desc">Crée 3 graphiques : (1) Histogramme des coûts par poste, (2) Graphique en barres des marges par client, (3) Camembert de la structure du coût de revient. Ces visuels iront directement dans ton mémoire.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="phase" id="p3">
+  <div class="phase-header" onclick="toggle('p3')">
+    <div class="phase-num" style="background:#FAEEDA;color:#854F0B;">3</div>
+    <div>
+      <div class="phase-title">Analyse et interprétation des résultats <span class="tag tag-analyse">Analyse</span></div>
+      <div class="phase-duration">Comment lire tes chiffres et quoi en dire</div>
+    </div>
+    <span class="chevron" id="c3">›</span>
+  </div>
+  <div class="phase-body" id="b3">
+    <div class="step">
+      <div class="step-dot" style="background:#EF9F27;"></div>
+      <div class="step-content">
+        <p class="step-title">Identifie les postes de coûts dominants</p>
+        <p class="step-desc">Regarde quel poste représente le plus gros % du coût total. En général chez Trapex ce sera l'énergie (séchage) et le transport. C'est ce que tu vas analyser en détail dans ton chapitre 2.</p>
+        <span class="step-tip">Si énergie > 30% du coût → c'est ton inducteur principal à commenter</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#EF9F27;"></div>
+      <div class="step-content">
+        <p class="step-title">Compare les marges entre clients</p>
+        <p class="step-desc">Classe tes clients du plus rentable au moins rentable. Explique pourquoi certains sont moins rentables (distance trop grande ? Prix de vente trop bas ? Gros volumes mais remises excessives ?).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#EF9F27;"></div>
+      <div class="step-content">
+        <p class="step-title">Vérifie si les prix couvrent les coûts</p>
+        <p class="step-desc">Pour chaque client : est-ce que le prix de vente est supérieur au coût de revient rendu ? Si un client est déficitaire, c'est une découverte importante à mettre en avant dans ton mémoire.</p>
+        <span class="step-tip">Ce genre de résultat concret impressionne les encadrants</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#EF9F27;"></div>
+      <div class="step-content">
+        <p class="step-title">Calcule les écarts (réel vs objectif)</p>
+        <p class="step-desc">Si Trapex a un budget ou des objectifs de marge, compare le réel à l'objectif. Si pas de budget : compare SHL 20 vs dérivés entre eux, ou compare deux périodes (trimestres) pour montrer une évolution.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="phase" id="p4">
+  <div class="phase-header" onclick="toggle('p4')">
+    <div class="phase-num" style="background:#EEEDFE;color:#3C3489;">4</div>
+    <div>
+      <div class="phase-title">Rédaction du mémoire <span class="tag tag-redaction">Rédaction</span></div>
+      <div class="phase-duration">Dans quel ordre écrire et quoi mettre où</div>
+    </div>
+    <span class="chevron" id="c4">›</span>
+  </div>
+  <div class="phase-body" id="b4">
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Commence par la Partie II (empirique) — pas la Partie I</p>
+        <p class="step-desc">Rédige d'abord ce que tu as calculé et observé chez Trapex. C'est plus facile car tu as les données devant toi. La théorie (Partie I) sera plus simple à écrire ensuite car tu sauras exactement ce que tu dois justifier.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Structure chaque section de la même façon</p>
+        <p class="step-desc">Pour chaque section : (1) Annonce ce que tu vas faire — (2) Présente les données/chiffres avec un tableau — (3) Commente et interprète — (4) Conclus avec une phrase de transition vers la section suivante.</p>
+        <span class="step-tip">Ne mets jamais un tableau sans l'expliquer en dessous</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Partie II Chap 1 — Présentation de Trapex</p>
+        <p class="step-desc">Historique, activité, organigramme, processus de production à Taourirt. Utilise les informations internes de l'entreprise. Ajoute un schéma du processus (extraction → broyage → séchage → stockage → livraison).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Partie II Chap 2 — Tes calculs (le cœur du mémoire)</p>
+        <p class="step-desc">Présente tes tableaux Excel sous forme de tableaux formatés. Commente chaque résultat. Section 1 = coût de revient, Section 2 = rentabilité clients, Section 3 = analyse des écarts énergie et transport.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Partie II Chap 3 — Recommandations</p>
+        <p class="step-desc">Propose 3 à 5 recommandations concrètes basées sur tes résultats. Exemple : "réduire le coût de séchage par X", "renégocier le tarif transport avec le transporteur Y", "revoir le pricing du client Z".</p>
+        <span class="step-tip">Les recommandations doivent découler directement de tes chiffres</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#7F77DD;"></div>
+      <div class="step-content">
+        <p class="step-title">Rédige la Partie I (théorie) en dernier</p>
+        <p class="step-desc">Maintenant que tu sais ce que tu as fait en pratique, écris la théorie qui le justifie. Chaque concept théorique doit avoir un lien avec ce que tu as appliqué chez Trapex.</p>
+        <span class="step-tip">Formule de liaison utile : "Comme nous le verrons dans la Partie II…"</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="phase" id="p5">
+  <div class="phase-header" onclick="toggle('p5')">
+    <div class="phase-num" style="background:#E1F5EE;color:#0F6E56;">5</div>
+    <div>
+      <div class="phase-title">Dashboard & finalisation <span class="tag tag-excel">Excel + Rapport</span></div>
+      <div class="phase-duration">Les dernières étapes avant la soutenance</div>
+    </div>
+    <span class="chevron" id="c5">›</span>
+  </div>
+  <div class="phase-body" id="b5">
+    <div class="step">
+      <div class="step-dot" style="background:#1D9E75;"></div>
+      <div class="step-content">
+        <p class="step-title">Finalise le dashboard Excel (Partie II Chap 3 Sec 1)</p>
+        <p class="step-desc">Ton dashboard doit afficher en un coup d'œil : coût de revient total, marge par client, part de l'énergie et du transport dans les coûts, et un classement clients. Utilise des couleurs (vert = bon, rouge = mauvais).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#1D9E75;"></div>
+      <div class="step-content">
+        <p class="step-title">Intègre les graphiques dans le mémoire</p>
+        <p class="step-desc">Copie les graphiques Excel en image dans Word. Chaque graphique doit avoir un titre, une source ("Source : données Trapex Mining, traitement personnel") et un commentaire en dessous.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#1D9E75;"></div>
+      <div class="step-content">
+        <p class="step-title">Rédige l'introduction et la conclusion en tout dernier</p>
+        <p class="step-desc">L'introduction doit présenter la problématique, justifier le choix du sujet, annoncer le plan. La conclusion répond à la problématique avec tes résultats et ouvre sur des perspectives.</p>
+        <span class="step-tip">Problématique suggérée : "Dans quelle mesure le calcul du coût de revient permet-il d'optimiser la rentabilité commerciale de Trapex Mining ?"</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-dot" style="background:#1D9E75;"></div>
+      <div class="step-content">
+        <p class="step-title">Vérifie la cohérence théorie / pratique</p>
+        <p class="step-desc">Pour chaque outil théorique mentionné en Partie I (comptabilité analytique, méthode des centres d'analyse, ABC…), vérifie qu'il est bien appliqué ou discuté dans la Partie II. Sinon : soit tu l'appliques, soit tu l'enlèves de la théorie.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button onclick="sendPrompt('Donne-moi un modèle de problématique et d\'introduction générale pour mon mémoire sur le coût de revient chez Trapex Mining')" style="margin-top:8px;font-size:13px;">Aide pour l'introduction ↗</button>
+<button onclick="sendPrompt('Propose-moi la structure détaillée du fichier Excel pour calculer le coût de revient et la rentabilité client chez Trapex Mining')" style="margin-top:8px;font-size:13px;margin-left:8px;">Structure Excel détaillée ↗</button>
+
+<script>
+function toggle(id) {
+  const body = document.getElementById('b' + id.slice(1));
+  const chev = document.getElementById('c' + id.slice(1));
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+}
+</script>
